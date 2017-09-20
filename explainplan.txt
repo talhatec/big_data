@@ -1,0 +1,253 @@
+(Democrat,637)
+(Republican,351)
+(Independent,2)
+#-----------------------------------------------
+# New Logical Plan:
+#-----------------------------------------------
+counters: (Name: LOStore Schema: group#69:chararray,#83:long)ColumnPrune:OutputUids=[83, 69]ColumnPrune:InputUids=[83, 69]
+|
+|---counters: (Name: LOForEach Schema: group#69:chararray,#83:long)ColumnPrune:OutputUids=[83, 69]ColumnPrune:InputUids=[81, 69]
+    |   |
+    |   (Name: LOGenerate[false,false] Schema: group#69:chararray,#83:long)ColumnPrune:OutputUids=[83, 69]ColumnPrune:InputUids=[81, 69]
+    |   |   |
+    |   |   group:(Name: Project Type: chararray Uid: 69 Input: 0 Column: (*))
+    |   |   |
+    |   |   (Name: UserFunc(org.apache.pig.builtin.COUNT) Type: long Uid: 83)
+    |   |   |
+    |   |   |---join_contact_congress:(Name: Project Type: bag Uid: 81 Input: 1 Column: (*))
+    |   |
+    |   |---(Name: LOInnerLoad[0] Schema: group#69:chararray)
+    |   |
+    |   |---join_contact_congress: (Name: LOInnerLoad[1] Schema: visitors::lname#72:chararray,visitors::fname#73:chararray,congress_data::district#65:chararray,congress_data::lname#79:chararray,congress_data::fname#80:chararray,congress_data::party#69:chararray)
+    |
+    |---join_group: (Name: LOCogroup Schema: group#69:chararray,join_contact_congress#81:bag{#94:tuple(visitors::lname#72:chararray,visitors::fname#73:chararray,congress_data::district#65:chararray,congress_data::lname#79:chararray,congress_data::fname#80:chararray,congress_data::party#69:chararray)})ColumnPrune:OutputUids=[81, 69]ColumnPrune:InputUids=[80, 65, 69, 72, 73, 79]
+        |   |
+        |   congress_data::party:(Name: Project Type: chararray Uid: 69 Input: 0 Column: 5)
+        |
+        |---join_contact_congress: (Name: LOJoin(REPLICATED) Schema: visitors::lname#72:chararray,visitors::fname#73:chararray,congress_data::district#65:chararray,congress_data::lname#79:chararray,congress_data::fname#80:chararray,congress_data::party#69:chararray)ColumnPrune:OutputUids=[80, 65, 69, 72, 73, 79]ColumnPrune:InputUids=[80, 65, 69, 72, 73, 79]
+            |   |
+            |   lname:(Name: Project Type: chararray Uid: 72 Input: 0 Column: 0)
+            |   |
+            |   fname:(Name: Project Type: chararray Uid: 73 Input: 0 Column: 1)
+            |   |
+            |   lname:(Name: Project Type: chararray Uid: 79 Input: 1 Column: 1)
+            |   |
+            |   fname:(Name: Project Type: chararray Uid: 80 Input: 1 Column: 2)
+            |
+            |---visitors: (Name: LOForEach Schema: lname#72:chararray,fname#73:chararray)ColumnPrune:OutputUids=[72, 73]ColumnPrune:InputUids=[72, 73]
+            |   |   |
+            |   |   (Name: LOGenerate[false,false] Schema: lname#72:chararray,fname#73:chararray)ColumnPrune:OutputUids=[72, 73]ColumnPrune:InputUids=[72, 73]
+            |   |   |   |
+            |   |   |   (Name: Cast Type: chararray Uid: 72)
+            |   |   |   |
+            |   |   |   |---lname:(Name: Project Type: bytearray Uid: 72 Input: 0 Column: (*))
+            |   |   |   |
+            |   |   |   (Name: Cast Type: chararray Uid: 73)
+            |   |   |   |
+            |   |   |   |---fname:(Name: Project Type: bytearray Uid: 73 Input: 1 Column: (*))
+            |   |   |
+            |   |   |---(Name: LOInnerLoad[0] Schema: lname#72:bytearray)
+            |   |   |
+            |   |   |---(Name: LOInnerLoad[1] Schema: fname#73:bytearray)
+            |   |
+            |   |---visitors: (Name: LOLoad Schema: lname#72:bytearray,fname#73:bytearray)ColumnPrune:OutputUids=[72, 73]ColumnPrune:InputUids=[72, 73]RequiredFields:null
+            |
+            |---congress_data: (Name: LOForEach Schema: district#65:chararray,lname#97:chararray,fname#99:chararray,party#69:chararray)
+                |   |
+                |   (Name: LOGenerate[false,false,false,false] Schema: district#65:chararray,lname#97:chararray,fname#99:chararray,party#69:chararray)
+                |   |   |
+                |   |   (Name: Cast Type: chararray Uid: 65)
+                |   |   |
+                |   |   |---district:(Name: Project Type: bytearray Uid: 65 Input: 0 Column: (*))
+                |   |   |
+                |   |   (Name: UserFunc(org.apache.pig.builtin.UPPER) Type: chararray Uid: 97)
+                |   |   |
+                |   |   |---(Name: Cast Type: chararray Uid: 68)
+                |   |       |
+                |   |       |---lname:(Name: Project Type: bytearray Uid: 68 Input: 1 Column: (*))
+                |   |   |
+                |   |   (Name: UserFunc(org.apache.pig.builtin.UPPER) Type: chararray Uid: 99)
+                |   |   |
+                |   |   |---(Name: Cast Type: chararray Uid: 67)
+                |   |       |
+                |   |       |---fname:(Name: Project Type: bytearray Uid: 67 Input: 2 Column: (*))
+                |   |   |
+                |   |   (Name: Cast Type: chararray Uid: 69)
+                |   |   |
+                |   |   |---party:(Name: Project Type: bytearray Uid: 69 Input: 3 Column: (*))
+                |   |
+                |   |---(Name: LOInnerLoad[0] Schema: district#65:bytearray)
+                |   |
+                |   |---(Name: LOInnerLoad[2] Schema: lname#68:bytearray)
+                |   |
+                |   |---(Name: LOInnerLoad[1] Schema: fname#67:bytearray)
+                |   |
+                |   |---(Name: LOInnerLoad[3] Schema: party#69:bytearray)
+                |
+                |---congress: (Name: LOLoad Schema: district#65:bytearray,fname#67:bytearray,lname#68:bytearray,party#69:bytearray)ColumnPrune:OutputUids=[65, 67, 68, 69]ColumnPrune:InputUids=[65, 67, 68, 69]ColumnPrune:RequiredColumns=[1, 3, 4, 5]RequiredFields:[1, 3, 4, 5]
+#-----------------------------------------------
+# Physical Plan:
+#-----------------------------------------------
+counters: Store(fakefile:org.apache.pig.builtin.PigStorage) - scope-110
+|
+|---counters: New For Each(false,false)[bag] - scope-109
+    |   |
+    |   Project[chararray][0] - scope-104
+    |   |
+    |   POUserFunc(org.apache.pig.builtin.COUNT)[long] - scope-107
+    |   |
+    |   |---Project[bag][1] - scope-106
+    |
+    |---join_group: Package(Packager)[tuple]{chararray} - scope-101
+        |
+        |---join_group: Global Rearrange[tuple] - scope-100
+            |
+            |---join_group: Local Rearrange[tuple]{chararray}(false) - scope-102
+                |   |
+                |   Project[chararray][5] - scope-103
+                |
+                |---join_contact_congress: FRJoin[tuple] - scope-94
+                    |   |
+                    |   Project[chararray][0] - scope-90
+                    |   |
+                    |   Project[chararray][1] - scope-91
+                    |   |
+                    |   Project[chararray][1] - scope-92
+                    |   |
+                    |   Project[chararray][2] - scope-93
+                    |
+                    |---visitors: New For Each(false,false)[bag] - scope-73
+                    |   |   |
+                    |   |   Cast[chararray] - scope-68
+                    |   |   |
+                    |   |   |---Project[bytearray][0] - scope-67
+                    |   |   |
+                    |   |   Cast[chararray] - scope-71
+                    |   |   |
+                    |   |   |---Project[bytearray][1] - scope-70
+                    |   |
+                    |   |---visitors: Load(hdfs://sandbox:8020/user/root/whitehouse/visits.txt:PigStorage(',')) - scope-66
+                    |
+                    |---congress_data: New For Each(false,false,false,false)[bag] - scope-89
+                        |   |
+                        |   Cast[chararray] - scope-76
+                        |   |
+                        |   |---Project[bytearray][0] - scope-75
+                        |   |
+                        |   POUserFunc(org.apache.pig.builtin.UPPER)[chararray] - scope-80
+                        |   |
+                        |   |---Cast[chararray] - scope-79
+                        |       |
+                        |       |---Project[bytearray][2] - scope-78
+                        |   |
+                        |   POUserFunc(org.apache.pig.builtin.UPPER)[chararray] - scope-84
+                        |   |
+                        |   |---Cast[chararray] - scope-83
+                        |       |
+                        |       |---Project[bytearray][1] - scope-82
+                        |   |
+                        |   Cast[chararray] - scope-87
+                        |   |
+                        |   |---Project[bytearray][3] - scope-86
+                        |
+                        |---congress: Load(hdfs://sandbox:8020/user/root/whitehouse/congress.txt:org.apache.pig.builtin.PigStorage) - scope-74
+
+#--------------------------------------------------
+# Map Reduce Plan                                  
+#--------------------------------------------------
+MapReduce node scope-112
+Map Plan
+Store(hdfs://sandbox:8020/tmp/temp-1884396031/tmp591152003:org.apache.pig.impl.io.InterStorage) - scope-113
+|
+|---congress_data: New For Each(false,false,false,false)[bag] - scope-89
+    |   |
+    |   Cast[chararray] - scope-76
+    |   |
+    |   |---Project[bytearray][0] - scope-75
+    |   |
+    |   POUserFunc(org.apache.pig.builtin.UPPER)[chararray] - scope-80
+    |   |
+    |   |---Cast[chararray] - scope-79
+    |       |
+    |       |---Project[bytearray][2] - scope-78
+    |   |
+    |   POUserFunc(org.apache.pig.builtin.UPPER)[chararray] - scope-84
+    |   |
+    |   |---Cast[chararray] - scope-83
+    |       |
+    |       |---Project[bytearray][1] - scope-82
+    |   |
+    |   Cast[chararray] - scope-87
+    |   |
+    |   |---Project[bytearray][3] - scope-86
+    |
+    |---congress: Load(hdfs://sandbox:8020/user/root/whitehouse/congress.txt:org.apache.pig.builtin.PigStorage) - scope-74--------
+Global sort: false
+----------------
+
+MapReduce node scope-111
+Map Plan
+join_group: Local Rearrange[tuple]{chararray}(false) - scope-125
+|   |
+|   Project[chararray][0] - scope-127
+|
+|---counters: New For Each(false,false)[bag] - scope-114
+    |   |
+    |   Project[chararray][0] - scope-115
+    |   |
+    |   POUserFunc(org.apache.pig.builtin.COUNT$Initial)[tuple] - scope-116
+    |   |
+    |   |---Project[bag][1] - scope-117
+    |
+    |---Pre Combiner Local Rearrange[tuple]{Unknown} - scope-128
+        |
+        |---join_contact_congress: FRJoin[tuple] - scope-94
+            |   |
+            |   Project[chararray][0] - scope-90
+            |   |
+            |   Project[chararray][1] - scope-91
+            |   |
+            |   Project[chararray][1] - scope-92
+            |   |
+            |   Project[chararray][2] - scope-93
+            |
+            |---visitors: New For Each(false,false)[bag] - scope-73
+                |   |
+                |   Cast[chararray] - scope-68
+                |   |
+                |   |---Project[bytearray][0] - scope-67
+                |   |
+                |   Cast[chararray] - scope-71
+                |   |
+                |   |---Project[bytearray][1] - scope-70
+                |
+                |---visitors: Load(hdfs://sandbox:8020/user/root/whitehouse/visits.txt:PigStorage(',')) - scope-66--------
+Combine Plan
+join_group: Local Rearrange[tuple]{chararray}(false) - scope-129
+|   |
+|   Project[chararray][0] - scope-131
+|
+|---counters: New For Each(false,false)[bag] - scope-118
+    |   |
+    |   Project[chararray][0] - scope-119
+    |   |
+    |   POUserFunc(org.apache.pig.builtin.COUNT$Intermediate)[tuple] - scope-120
+    |   |
+    |   |---Project[bag][1] - scope-121
+    |
+    |---join_group: Package(CombinerPackager)[tuple]{chararray} - scope-124--------
+Reduce Plan
+counters: Store(fakefile:org.apache.pig.builtin.PigStorage) - scope-110
+|
+|---counters: New For Each(false,false)[bag] - scope-109
+    |   |
+    |   Project[chararray][0] - scope-104
+    |   |
+    |   POUserFunc(org.apache.pig.builtin.COUNT$Final)[long] - scope-107
+    |   |
+    |   |---Project[bag][1] - scope-122
+    |
+    |---join_group: Package(CombinerPackager)[tuple]{chararray} - scope-101--------
+Global sort: false
+----------------
+
