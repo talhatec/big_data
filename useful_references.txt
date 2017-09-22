@@ -1,1 +1,8 @@
+https://pig.apache.org/docs/r0.7.0/piglatin_ref2.html#SAMPLE
+https://cwiki.apache.org/confluence/display/Hive/Parquet
+
+bletchley park
+
 https://www.dezyre.com/article/difference-between-pig-and-hive-the-two-key-components-of-hadoop-ecosystem/79
+https://www.dezyre.com/hadoop-tutorial/hadoop-multinode-cluster-setup
+https://www.dezyre.com/article/hadoop-cluster-overview-what-it-is-and-how-to-setup-one/356
