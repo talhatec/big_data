@@ -6,3 +6,14 @@ bletchley park
 https://www.dezyre.com/article/difference-between-pig-and-hive-the-two-key-components-of-hadoop-ecosystem/79
 https://www.dezyre.com/hadoop-tutorial/hadoop-multinode-cluster-setup
 https://www.dezyre.com/article/hadoop-cluster-overview-what-it-is-and-how-to-setup-one/356
+
+Cloudera on AWS --> http://gethue.com/hadoop-tutorial-how-to-create-a-real-hadoop-cluster-in-10-minutes/ 
+
+https://cwiki.apache.org/confluence/display/Hive/LanguageManual+ORC
+
+RPi Hadoop Setup
+
+https://developer.ibm.com/recipes/tutorials/building-a-hadoop-cluster-with-raspberry-pi/
+
+http://www.widriksson.com/raspberry-pi-hadoop-cluster/
+http://www.widriksson.com/raspberry-pi-2-hadoop-2-cluster/
